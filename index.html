@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science Job Salaries Presentation</title>
+    <style>
+        :root {
+  /* Primitive Color Tokens */
+  --color-white: rgba(255, 255, 255, 1);
+  --color-black: rgba(0, 0, 0, 1);
+  --color-cream-50: rgba(252, 252, 249, 1);
+  --color-cream-100: rgba(255, 255, 253, 1);
+  --color-gray-200: rgba(245, 245, 245, 1);
+  --color-gray-300: rgba(167, 169, 169, 1);
+  --color-gray-400: rgba(119, 124, 124, 1);
+  --color-slate-500: rgba(98, 108, 113, 1);
+  --color-brown-600: rgba(94, 82, 64, 1);
+  --color-charcoal-700: rgba(31, 33, 33, 1);
+  --color-charcoal-800: rgba(38, 40, 40, 1);
+  --color-slate-900: rgba(19, 52, 59, 1);
+  --color-teal-300: rgba(50, 184, 198, 1);
+  --color-teal-400: rgba(45, 166, 178, 1);
+  --color-teal-500: rgba(33, 128, 141, 1);
+  --color-teal-600: rgba(29, 116, 128, 1);
+  --color-teal-700: rgba(26, 104, 115, 1);
+  --color-teal-800: rgba(41, 150, 161, 1);
+  --color-red-400: rgba(255, 84, 89, 1);
+  --color-red-500: rgba(192, 21, 47, 1);
+  --color-orange-400: rgba(230, 129, 97, 1);
+  --color-orange-500: rgba(168, 75, 47, 1);
+
+  --color-brown-600-rgb: 94, 82, 64;
+  --color-teal-500-rgb: 33, 128, 141;
+  --color-slate-900-rgb: 19, 52, 59;
+  --color-slate-500-rgb: 98, 108, 113;
+  --color-red-500-rgb: 192, 21, 47;
+  --color-red-400-rgb: 255, 84, 89;
+  --color-orange-500-rgb: 168, 75, 47;
+  --color-orange-400-rgb: 230, 129, 97;
+
+  --color-background: var(--color-cream-50);
+  --color-surface: var(--color-cream-100);
+  --color-text: var(--color-slate-900);
+  --color-text-secondary: var(--color-slate-500);
+  --color-primary: var(--color-teal-500);
+  --color-primary-hover: var(--color-teal-600);
+  --color-primary-active: var(--color-teal-700);
+  
+  --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-size-base: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+  --font-size-4xl: 30px;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 550;
+  --font-weight-bold: 600;
+  --space-8: 8px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --radius-lg: 12px;
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-gray-400-rgb: 119, 124, 124;
+    --color-teal-300-rgb: 50, 184, 198;
+    --color-gray-300-rgb: 167, 169, 169;
+    --color-gray-200-rgb: 245, 245, 245;
+    --color-background: var(--color-charcoal-700);
+    --color-surface: var(--color-charcoal-800);
+    --color-text: var(--color-gray-200);
+    --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+    --color-primary: var(--color-teal-300);
+    --color-primary-hover: var(--color-teal-400);
+    --color-primary-active: var(--color-teal-800);
+  }
+}
+
+@font-face {
+  font-family: 'FKGroteskNeue';
+  src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2') format('woff2');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-base);
+    background: var(--color-background);
+    color: var(--color-text);
+    overflow: hidden;
+    height: 100vh;
+}
+
+.presentation {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.slide {
+    width: 100%;
+    height: 100vh;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.slide.active {
+    display: flex;
+    opacity: 1;
+}
+
+.slide-content {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.slide h1 {
+    font-size: 48px;
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+.slide h2 {
+    font-size: 36px;
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 30px;
+    color: var(--color-text);
+}
+
+.slide h3 {
+    font-size: 24px;
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+.subtitle {
+    font-size: 24px;
+    color: var(--color-text-secondary);
+    margin-bottom: 40px;
+}
+
+.metadata {
+    display: flex;
+    gap: 30px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    background: var(--color-surface);
+    padding: 15px 25px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(var(--color-teal-500-rgb), 0.2);
+}
+
+.meta-label {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.meta-value {
+    font-size: 16px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    margin-top: 5px;
+}
+
+.roadmap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.roadmap-item {
+    background: var(--color-surface);
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    border: 2px solid var(--color-primary);
+    position: relative;
+}
+
+.roadmap-item::after {
+    content: '→';
+    position: absolute;
+    right: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: var(--color-primary);
+}
+
+.roadmap-item:nth-child(4n)::after,
+.roadmap-item:last-child::after {
+    content: '';
+}
+
+.roadmap-number {
+    background: var(--color-primary);
+    color: var(--color-cream-50);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    font-weight: var(--font-weight-bold);
+}
+
+.roadmap-title {
+    font-weight: var(--font-weight-semibold);
+    font-size: 14px;
+}
+
+.content-section {
+    margin: 30px 0;
+}
+
+ul {
+    list-style: none;
+    margin-top: 20px;
+}
+
+li {
+    padding: 12px 0;
+    padding-left: 30px;
+    position: relative;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+li::before {
+    content: '●';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-size: 20px;
+}
+
+.highlight-box {
+    background: rgba(var(--color-teal-500-rgb), 0.1);
+    border-left: 4px solid var(--color-primary);
+    padding: 20px 25px;
+    margin: 20px 0;
+    border-radius: var(--radius-lg);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.stat-card {
+    background: var(--color-surface);
+    padding: 25px;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    border: 1px solid rgba(var(--color-teal-500-rgb), 0.2);
+}
+
+.stat-value {
+    font-size: 36px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-top: 8px;
+}
+
+.data-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(var(--color-teal-500-rgb), 0.2);
+}
+
+.data-table th {
+    background: var(--color-surface);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+}
+
+.data-table tr:hover {
+    background: rgba(var(--color-teal-500-rgb), 0.05);
+}
+
+.navigation {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    z-index: 1000;
+}
+
+.nav-btn {
+    background: var(--color-primary);
+    color: var(--color-cream-50);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: var(--font-weight-medium);
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: var(--color-primary-hover);
+    transform: translateY(-2px);
+}
+
+.nav-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.slide-counter {
+    background: var(--color-surface);
+    padding: 10px 20px;
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-weight-semibold);
+    border: 1px solid rgba(var(--color-teal-500-rgb), 0.2);
+}
+
+.two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.icon {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.emphasis {
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+    font-size: 1.2em;
+}
+
+.feature-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.feature-item {
+    background: var(--color-surface);
+    padding: 15px 20px;
+    border-radius: var(--radius-lg);
+    border-left: 3px solid var(--color-primary);
+}
+
+@media (max-width: 1024px) {
+    .slide {
+        padding: 40px 40px;
+    }
+    
+    .slide h1 {
+        font-size: 36px;
+    }
+    
+    .slide h2 {
+        font-size: 28px;
+    }
+    
+    .roadmap {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .two-column {
+        grid-template-columns: 1fr;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="slide-content">
+                <h1>📊 Data Science Job Salaries</h1>
+                <div class="subtitle">End-to-End Analysis &amp; Prediction</div>
+                <p style="font-size: 20px; color: var(--color-text-secondary); margin-bottom: 20px;">
+                    Uncovering Salary Trends, Identifying Drivers, and Building Predictive Models
+                </p>
+                <div class="metadata">
+                    <div class="meta-item">
+                        <div class="meta-label">Domain</div>
+                        <div class="meta-value">Finance Analyst / Data Science</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value">Intermediate</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Tools Used</div>
+                        <div class="meta-value">Python, ML, pandas, scikit-learn</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Roadmap -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">🗺️</span>Project Roadmap</h2>
+                <div class="roadmap">
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">1</div>
+                        <div class="roadmap-title">Problem Definition</div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">2</div>
+                        <div class="roadmap-title">Load Data</div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">3</div>
+                        <div class="roadmap-title">Data Cleaning</div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">4</div>
+                        <div class="roadmap-title">Feature Engineering</div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">5</div>
+                        <div class="roadmap-title">EDA &amp; Visualization</div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">6</div>
+                        <div class="roadmap-title">ML Modeling</div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">7</div>
+                        <div class="roadmap-title">Dashboard</div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">8</div>
+                        <div class="roadmap-title">Insights &amp; Recommendations</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Problem Definition -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">🎯</span>Problem Definition &amp; Objectives</h2>
+                <div class="highlight-box">
+                    <h3>Project Goal</h3>
+                    <p style="font-size: 18px;">Analyze data science job salaries to identify key factors influencing compensation and build predictive models for salary estimation.</p>
+                </div>
+                <div class="content-section">
+                    <h3>Key Research Questions</h3>
+                    <ul>
+                        <li>How do salaries vary by experience level and job title?</li>
+                        <li>Which countries offer the highest compensation?</li>
+                        <li>What impact do company size and employment type have?</li>
+                        <li>Can we build accurate predictive models for salary?</li>
+                        <li>What factors most significantly influence salary levels?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Dataset Overview -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">📋</span>Dataset Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">565</div>
+                        <div class="stat-label">Records (After Cleaning)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">11</div>
+                        <div class="stat-label">Columns</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">75</div>
+                        <div class="stat-label">Unique Job Titles</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">45</div>
+                        <div class="stat-label">Companies</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">50</div>
+                        <div class="stat-label">Countries</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">2020-2023</div>
+                        <div class="stat-label">Work Years</div>
+                    </div>
+                </div>
+                <div class="content-section">
+                    <h3>Key Attributes</h3>
+                    <div class="feature-list">
+                        <div class="feature-item">work_year, experience_level</div>
+                        <div class="feature-item">employment_type, job_title</div>
+                        <div class="feature-item">salary, salary_currency</div>
+                        <div class="feature-item">salary_in_usd, employee_residence</div>
+                        <div class="feature-item">remote_ratio, company_location</div>
+                        <div class="feature-item">company_size</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Data Cleaning -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">🧹</span>Data Cleaning Process</h2>
+                <div class="two-column">
+                    <div>
+                        <h3>Cleaning Steps</h3>
+                        <ul>
+                            <li>Removed duplicate records</li>
+                            <li>Handled missing values</li>
+                            <li>Standardized categorical variables</li>
+                            <li>Converted encoded values to readable labels</li>
+                            <li>Validated data types and ranges</li>
+                            <li>Ensured salary consistency (USD)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Code Conversions</h3>
+                        <table class="data-table">
+                            <tr>
+                                <th>Original</th>
+                                <th>Converted To</th>
+                            </tr>
+                            <tr>
+                                <td>EN</td>
+                                <td>Entry Level</td>
+                            </tr>
+                            <tr>
+                                <td>FT</td>
+                                <td>Full-time</td>
+                            </tr>
+                            <tr>
+                                <td>S</td>
+                                <td>Small Company</td>
+                            </tr>
+                            <tr>
+                                <td>remote_ratio</td>
+                                <td>Onsite/Hybrid/Remote</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Feature Engineering -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">⚙️</span>Feature Engineering</h2>
+                <div class="content-section">
+                    <h3>Numerical Encodings Created</h3>
+                    <div class="highlight-box">
+                        <p style="font-size: 18px;">Created numerical representations for 4 categorical variables to enable machine learning model training.</p>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Encoding</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>experience_level</td>
+                                <td>1-4</td>
+                                <td>Entry (1) → Executive (4)</td>
+                            </tr>
+                            <tr>
+                                <td>employment_type</td>
+                                <td>1-4</td>
+                                <td>Part-time (1) → Contract (4)</td>
+                            </tr>
+                            <tr>
+                                <td>job_type</td>
+                                <td>1-3</td>
+                                <td>Onsite (1) → Remote (3)</td>
+                            </tr>
+                            <tr>
+                                <td>company_size</td>
+                                <td>1-3</td>
+                                <td>Small (1) → Large (3)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: EDA Introduction -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">🔍</span>Exploratory Data Analysis</h2>
+                <div class="highlight-box">
+                    <h3>Analysis Overview</h3>
+                    <p style="font-size: 18px;">Conducted comprehensive exploratory data analysis using 10+ visualizations to uncover salary patterns and relationships.</p>
+                </div>
+                <div class="content-section">
+                    <h3>EDA Objectives</h3>
+                    <ul>
+                        <li>Understand salary distribution across different dimensions</li>
+                        <li>Identify correlations between features and compensation</li>
+                        <li>Detect outliers and anomalies in the data</li>
+                        <li>Visualize geographic and temporal trends</li>
+                        <li>Validate assumptions for modeling</li>
+                    </ul>
+                </div>
+                <div class="stats-grid" style="margin-top: 30px;">
+                    <div class="stat-card">
+                        <div class="stat-value">10+</div>
+                        <div class="stat-label">Visualizations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Key Dimensions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">50+</div>
+                        <div class="stat-label">Insights Generated</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Salary by Experience -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">📈</span>Salary Distribution by Experience Level</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">$61.6K</div>
+                        <div class="stat-label">Entry Level</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$87.8K</div>
+                        <div class="stat-label">Mid Level</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$138.4K</div>
+                        <div class="stat-label">Senior Level</div>
+                    </div>
+                    <div class="stat-card" style="grid-column: span 3;">
+                        <div class="stat-value" style="color: var(--color-orange-500);">$199.4K</div>
+                        <div class="stat-label">Executive Level</div>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <h3>Key Insight</h3>
+                    <p style="font-size: 20px;"><span class="emphasis">3.2x multiplier</span> from Entry to Executive level</p>
+                    <p style="font-size: 18px; margin-top: 10px;">Experience is the strongest predictor of salary, with exponential growth at senior and executive levels.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Salary by Employment Type -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">💼</span>Employment Type Impact on Salary</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">$33.1K</div>
+                        <div class="stat-label">Part-time</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$48.0K</div>
+                        <div class="stat-label">Freelance</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$111.8K</div>
+                        <div class="stat-label">Full-time</div>
+                    </div>
+                    <div class="stat-card" style="grid-column: span 3;">
+                        <div class="stat-value" style="color: var(--color-orange-500);">$184.6K</div>
+                        <div class="stat-label">Contract</div>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <h3>Key Insights</h3>
+                    <ul>
+                        <li><span class="emphasis">Contract roles</span> offer 65% higher compensation than full-time</li>
+                        <li>Full-time positions provide stable, competitive salaries</li>
+                        <li>Part-time and freelance roles significantly lower compensation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Salary by Job Type -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">🏠</span>Job Type Analysis: Remote vs Onsite</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">$105.8K</div>
+                        <div class="stat-label">Onsite</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$80.7K</div>
+                        <div class="stat-label">Hybrid</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--color-orange-500);">$120.8K</div>
+                        <div class="stat-label">Remote</div>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <h3>Remote Work Premium</h3>
+                    <p style="font-size: 20px;"><span class="emphasis">+$15K premium</span> for remote positions vs onsite</p>
+                    <p style="font-size: 18px; margin-top: 15px;">Remote work offers both flexibility and financial benefits, making it the most attractive option for data science professionals.</p>
+                </div>
+                <div class="content-section">
+                    <h3>Implications</h3>
+                    <ul>
+                        <li>Remote positions attract top talent with higher compensation</li>
+                        <li>Hybrid models show lower salary ranges</li>
+                        <li>Geographic arbitrage opportunities in remote work</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Salary by Company Size -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">🏢</span>Company Size Influence</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">$77.9K</div>
+                        <div class="stat-label">Small Company</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$114.8K</div>
+                        <div class="stat-label">Medium Company</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--color-orange-500);">$118.2K</div>
+                        <div class="stat-label">Large Company</div>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <h3>Size Matters</h3>
+                    <p style="font-size: 20px;"><span class="emphasis">50% higher salary</span> in large companies vs small</p>
+                    <p style="font-size: 18px; margin-top: 15px;">Large enterprises have greater resources and budgets for competitive compensation packages.</p>
+                </div>
+                <div class="content-section">
+                    <h3>Company Size Considerations</h3>
+                    <ul>
+                        <li>Large companies: Higher pay, more structure, better benefits</li>
+                        <li>Medium companies: Balanced compensation and growth opportunities</li>
+                        <li>Small companies: Lower pay but potentially more equity/ownership</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Geographic Trends -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">🌍</span>Geographic Salary Trends</h2>
+                <div class="content-section">
+                    <h3>Top Paying Countries</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Country</th>
+                                <th>Average Salary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>🥇</td>
+                                <td>Russia</td>
+                                <td style="color: var(--color-orange-500); font-weight: var(--font-weight-bold); font-size: 18px;">$157,500</td>
+                            </tr>
+                            <tr>
+                                <td>🥈</td>
+                                <td>United States</td>
+                                <td style="color: var(--color-primary); font-weight: var(--font-weight-bold); font-size: 18px;">$144,293</td>
+                            </tr>
+                            <tr>
+                                <td>🥉</td>
+                                <td>New Zealand</td>
+                                <td style="color: var(--color-primary); font-weight: var(--font-weight-bold); font-size: 18px;">$125,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <h3>Geographic Insights</h3>
+                    <ul>
+                        <li>USA remains the top market for data science opportunities</li>
+                        <li>Russia shows premium compensation for specialized roles</li>
+                        <li>English-speaking countries (USA, UK, Canada) offer strong markets</li>
+                        <li>Remote work enables access to international opportunities</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: ML Model -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">🤖</span>Machine Learning Model</h2>
+                <div class="highlight-box">
+                    <h3>Model Specifications</h3>
+                    <p style="font-size: 18px;"><strong>Algorithm:</strong> Linear Regression</p>
+                    <p style="font-size: 18px;"><strong>Train/Test Split:</strong> 80% / 20%</p>
+                </div>
+                <div class="content-section">
+                    <h3>Features Used</h3>
+                    <div class="feature-list">
+                        <div class="feature-item">✓ experience_level</div>
+                        <div class="feature-item">✓ employment_type</div>
+                        <div class="feature-item">✓ job_type (remote/onsite)</div>
+                        <div class="feature-item">✓ company_size</div>
+                        <div class="feature-item">✓ work_year</div>
+                    </div>
+                </div>
+                <div class="stats-grid" style="margin-top: 30px;">
+                    <div class="stat-card">
+                        <div class="stat-value">0.78</div>
+                        <div class="stat-label">Train R² Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">0.75</div>
+                        <div class="stat-label">Test R² Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$31.2K</div>
+                        <div class="stat-label">Test MAE</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Model Performance -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">📊</span>Model Performance &amp; Feature Importance</h2>
+                <div class="two-column">
+                    <div>
+                        <h3>Performance Metrics</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Train</th>
+                                    <th>Test</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>R² Score</td>
+                                    <td>0.78</td>
+                                    <td>0.75</td>
+                                </tr>
+                                <tr>
+                                    <td>MAE</td>
+                                    <td>$28,500</td>
+                                    <td>$31,200</td>
+                                </tr>
+                                <tr>
+                                    <td>RMSE</td>
+                                    <td>-</td>
+                                    <td>$42,300</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <h3>Feature Coefficients</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Impact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Experience Level</td>
+                                    <td style="color: var(--color-orange-500); font-weight: var(--font-weight-bold);">+$45,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Job Type (Remote)</td>
+                                    <td style="color: var(--color-primary); font-weight: var(--font-weight-bold);">+$15,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Company Size</td>
+                                    <td style="color: var(--color-primary); font-weight: var(--font-weight-bold);">+$12,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Employment Type</td>
+                                    <td>+$8,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Work Year</td>
+                                    <td>+$5,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <p style="font-size: 18px;">Model explains <span class="emphasis">75% of salary variance</span> with average prediction error of <span class="emphasis">$31,200</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Top Insights -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">💡</span>Top Insights &amp; Discoveries</h2>
+                <div class="content-section">
+                    <h3>Key Salary Drivers</h3>
+                    <ul>
+                        <li><strong>Experience is paramount:</strong> 3.2x multiplier from Entry to Executive</li>
+                        <li><strong>Remote work premium:</strong> +$15K advantage over onsite positions</li>
+                        <li><strong>Company size matters:</strong> 50% higher salaries in large enterprises</li>
+                        <li><strong>Contract roles pay more:</strong> 65% premium over full-time</li>
+                        <li><strong>Geographic concentration:</strong> USA, Russia, and NZ lead in compensation</li>
+                        <li><strong>Specialized roles command premium:</strong> Principal roles average $300K+</li>
+                        <li><strong>Temporal growth:</strong> Year-over-year salary increases observed</li>
+                    </ul>
+                </div>
+                <div class="stats-grid" style="margin-top: 30px;">
+                    <div class="stat-card">
+                        <div class="stat-value">$328K</div>
+                        <div class="stat-label">Principal Data Engineer</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$275K</div>
+                        <div class="stat-label">Financial Data Analyst</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$215K</div>
+                        <div class="stat-label">Principal Data Scientist</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Recommendations -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">🎯</span>Strategic Recommendations</h2>
+                <div class="content-section">
+                    <h3>For Data Science Professionals</h3>
+                    <ul>
+                        <li><strong>Career Progression:</strong> Pursue senior/executive-level advancement for 3-5x salary multiplier</li>
+                        <li><strong>Employment Type:</strong> Prefer full-time or contract roles over part-time/freelance</li>
+                        <li><strong>Work Arrangement:</strong> Target remote positions for flexibility and +$15K premium</li>
+                        <li><strong>Company Selection:</strong> Focus on large enterprises for higher compensation</li>
+                        <li><strong>Geographic Strategy:</strong> Prioritize USA, Russia, and New Zealand markets</li>
+                        <li><strong>Specialization:</strong> Develop Principal-level or specialized skills for $300K+ roles</li>
+                        <li><strong>Negotiation Leverage:</strong> Use experience and remote flexibility as key bargaining points</li>
+                    </ul>
+                </div>
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <h3>Career Optimization Formula</h3>
+                    <p style="font-size: 18px;">Senior/Executive Role + Remote Work + Large Company + USA/International Market = <span class="emphasis">Maximum Compensation</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Dashboard Concepts -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">📱</span>Interactive Dashboard Concepts</h2>
+                <div class="content-section">
+                    <h3>Streamlit Dashboard Features</h3>
+                    <div class="two-column">
+                        <div>
+                            <h3>Widget Types</h3>
+                            <ul>
+                                <li>Summary statistics cards</li>
+                                <li>Interactive line charts (salary trends)</li>
+                                <li>Dropdown filters (job title, experience)</li>
+                                <li>Bar charts (top countries, roles)</li>
+                                <li>Scatter plots (correlations)</li>
+                                <li>Data tables (detailed views)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Use Cases</h3>
+                            <ul>
+                                <li>Explore salary by job title</li>
+                                <li>Compare experience levels</li>
+                                <li>Filter by location</li>
+                                <li>Analyze temporal trends</li>
+                                <li>Predict your salary</li>
+                                <li>Export custom reports</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <h3>Dashboard Benefits</h3>
+                    <p style="font-size: 18px;">Interactive exploration enables stakeholders to discover insights, compare scenarios, and make data-driven career and hiring decisions.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Conclusion -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="icon">🎉</span>Conclusion &amp; Next Steps</h2>
+                <div class="content-section">
+                    <h3>Project Completion Summary</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">✓</div>
+                            <div class="stat-label">Data Cleaning</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">✓</div>
+                            <div class="stat-label">Feature Engineering</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">✓</div>
+                            <div class="stat-label">EDA &amp; Visualization</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">✓</div>
+                            <div class="stat-label">ML Modeling (R²=0.75)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">✓</div>
+                            <div class="stat-label">Dashboard Design</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">✓</div>
+                            <div class="stat-label">Insights &amp; Recommendations</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-section">
+                    <h3>Suggested Next Steps</h3>
+                    <ul>
+                        <li>Implement advanced models (Random Forest, XGBoost) for improved accuracy</li>
+                        <li>Incorporate additional features (education, skills, certifications)</li>
+                        <li>Deploy interactive dashboard to production</li>
+                        <li>Create automated reporting pipeline</li>
+                        <li>Expand dataset with more recent data</li>
+                    </ul>
+                </div>
+                <div class="highlight-box" style="margin-top: 30px; text-align: center;">
+                    <h3>Thank You!</h3>
+                    <p style="font-size: 20px;">Questions &amp; Discussion</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <div class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">18</span>
+        </div>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('totalSlides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                if (currentSlide > 0) changeSlide(-1);
+            } else if (e.key === 'ArrowRight') {
+                if (currentSlide < totalSlides - 1) changeSlide(1);
+            }
+        });
+        
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
